@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movie;
-use Illuminate\Http\Request;
 use App\Models\MovieBroadcast;
+use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
@@ -13,7 +13,7 @@ class MovieController extends Controller
         $query = Movie::query();
 
         if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+            $query->where('name', 'like', '%'.$request->name.'%');
         }
 
         $movies = $query->orderBy('created_at', 'desc')->paginate(10);
