@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('channel_nr');
             $table->timestamp('broadcasts_at');
             $table->timestamps();
+            $table->unique(['channel_nr', 'broadcasts_at', 'movie_id'], 'unique_broadcast');
         });
     }
 
