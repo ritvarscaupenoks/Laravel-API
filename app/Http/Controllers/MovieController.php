@@ -12,8 +12,8 @@ class MovieController extends Controller
     {
         $query = Movie::query();
 
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%'.$request->name.'%');
+        if ($request->has('title')) {
+            $query->where('title', 'like', '%'.$request->title.'%');
         }
 
         $movies = $query->orderBy('created_at', 'desc')->paginate(10);
@@ -51,13 +51,14 @@ class MovieController extends Controller
         return response()->json($movie, 201);
     }
 
-    public function addBroadcast(Request $request)
+    public function addBroadcast(Request $request, Movie $movie)
     {
         $validated = $request->validate([
-            'movie_id' => 'required|exists:movies,id',
             'channel_nr' => 'required|integer',
             'broadcasts_at' => 'required|date_format:Y-m-d H:i:s',
         ]);
+
+        $validated['movie_id'] = $movie->id;
 
         $broadcast = MovieBroadcast::create($validated);
 
